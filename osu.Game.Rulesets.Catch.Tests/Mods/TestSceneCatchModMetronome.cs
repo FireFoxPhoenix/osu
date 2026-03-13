@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Catch.Mods;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Catch.Tests.Mods
 {
