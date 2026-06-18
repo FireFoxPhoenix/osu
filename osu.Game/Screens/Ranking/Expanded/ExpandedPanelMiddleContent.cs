@@ -15,6 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using osu.Game.Screens.Play.HUD;
@@ -151,7 +152,8 @@ namespace osu.Game.Screens.Ranking.Expanded
                                         Origin = Anchor.CentreLeft,
                                         ExpansionMode = ExpansionMode.AlwaysExpanded,
                                         Scale = new Vector2(0.5f),
-                                        Current = { Value = score.Mods }
+                                        Current = { Value = score.Mods.Where(m => (m.Visibility & ModVisibility.HideInResults) == 0).ToArray() },
+                                        ApplyVisibilityFilter = false
                                     }
                                 }
                             },

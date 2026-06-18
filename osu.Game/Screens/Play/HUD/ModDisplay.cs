@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -75,6 +76,11 @@ namespace osu.Game.Screens.Play.HUD
 
         private readonly FillFlowContainer<ModIcon> iconsContainer;
 
+        /// <summary>
+        /// Whether to apply visibility filtering based on Mod.Visibility.
+        /// </summary>
+        public bool ApplyVisibilityFilter { get; set; } = true;
+
         public ModDisplay(bool showExtendedInformation = true)
         {
             this.showExtendedInformation = showExtendedInformation;
@@ -100,7 +106,12 @@ namespace osu.Game.Screens.Play.HUD
         {
             iconsContainer.Clear();
 
-            foreach (Mod mod in mods.NewValue.AsOrdered())
+            IEnumerable<Mod> displayMods = mods.NewValue.AsOrdered();
+
+            if (ApplyVisibilityFilter)
+                displayMods = displayMods.Where(m => (m.Visibility & ModVisibility.HideInHUD) == 0);
+
+            foreach (Mod mod in displayMods)
                 iconsContainer.Add(new ModIcon(mod, showExtendedInformation: showExtendedInformation) { Scale = new Vector2(MOD_ICON_SCALE) });
         }
 

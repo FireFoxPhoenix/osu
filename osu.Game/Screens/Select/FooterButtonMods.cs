@@ -160,6 +160,7 @@ namespace osu.Game.Screens.Select
                                     Scale = new Vector2(0.5f),
                                     Current = { BindTarget = Mods },
                                     ExpansionMode = ExpansionMode.AlwaysContracted,
+                                    ApplyVisibilityFilter = false,
                                 },
                                 overflowModCountDisplay = new ModCountText { Mods = { BindTarget = Mods }, },
                             }

@@ -153,7 +153,7 @@ namespace osu.Game.Screens.Ranking.Contracted
                                                     Margin = new MarginPadding { Right = 2 }
                                                 },
                                                 ..
-                                                score.Mods.AsOrdered().Select(m => new ModIcon(m)
+                                                score.Mods.AsOrdered().Where(m => (m.Visibility & ModVisibility.HideInResults) == 0).Select(m => new ModIcon(m)
                                                 {
                                                     Anchor = Anchor.TopCentre,
                                                     Origin = Anchor.TopCentre,

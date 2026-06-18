@@ -6,15 +6,19 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Mania.Beatmaps;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Mania.Mods
 {
-    public abstract class ManiaKeyMod : Mod, IApplicableToBeatmapConverter
+    public abstract class ManiaKeyMod : Mod, IApplicableToBeatmapConverter, IApplicableToPlayer
     {
         public override string Acronym => Name;
         public abstract int KeyCount { get; }
         public override ModType Type => ModType.Conversion;
         public override bool Ranked => UsesDefaultConfiguration;
+        public override ModVisibility Visibility => IsManiaMap ? ModVisibility.FullHide : ModVisibility.Show;
+
+        private bool IsManiaMap;
 
         public void ApplyToBeatmapConverter(IBeatmapConverter beatmapConverter)
         {
@@ -22,9 +26,24 @@ namespace osu.Game.Rulesets.Mania.Mods
 
             // Although this can work, for now let's not allow keymods for mania-specific beatmaps
             if (mbc.IsForCurrentRuleset)
+            {
+                IsManiaMap = true;
                 return;
+            }
+
+            IsManiaMap = false;
 
             mbc.TargetColumns = KeyCount;
+        }
+
+        public void ApplyToPlayer(Player player)
+        {
+            if (IsManiaMap)
+            {
+                var scoreInfo = player.Score.ScoreInfo;
+
+                scoreInfo.Mods = scoreInfo.Mods.Where(m => m.GetType() != this.GetType()).ToArray();
+            }
         }
 
         public override Type[] IncompatibleMods => new[]

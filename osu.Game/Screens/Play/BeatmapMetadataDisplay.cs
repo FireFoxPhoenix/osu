@@ -232,7 +232,8 @@ namespace osu.Game.Screens.Play
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
                             Margin = new MarginPadding { Top = 20 },
-                            Current = mods
+                            Current = mods,
+                            ApplyVisibilityFilter = true
                         },
                     },
                 }

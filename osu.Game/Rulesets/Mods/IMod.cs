@@ -80,6 +80,11 @@ namespace osu.Game.Rulesets.Mods
         bool Ranked { get; }
 
         /// <summary>
+        /// Controls where this mod should be hidden in the UI.
+        /// </summary>
+        ModVisibility Visibility { get; }
+
+        /// <summary>
         /// Create a fresh <see cref="Mod"/> instance based on this mod.
         /// </summary>
         Mod CreateInstance() => (Mod)Activator.CreateInstance(GetType())!;

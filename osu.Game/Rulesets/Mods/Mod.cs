@@ -116,6 +116,9 @@ namespace osu.Game.Rulesets.Mods
         [JsonIgnore]
         public virtual bool Ranked => false;
 
+        [JsonIgnore]
+        public virtual ModVisibility Visibility => ModVisibility.Show;
+
         /// <summary>
         /// The mods this mod cannot be enabled with.
         /// </summary>
